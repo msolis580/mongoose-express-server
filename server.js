@@ -20,7 +20,7 @@ const connections = {};
 
 const models = {};
 
-// const bankUserSchema = new mongoose.Schema({});
+const bankUserSchema = new mongoose.Schema({});
 
 const getConnection = async (dbName) => {
     console.log(`getConnection called with ${dbName}`);
