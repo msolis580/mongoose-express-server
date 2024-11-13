@@ -1,0 +1,14 @@
+@database = BigBoxStore;
+@collection = groceryInventory;
+
+@domain = http://localhost;
+
+@port = 3000;
+
+###
+GET {{domain}}:{{port}}/find/{{database}}/{{collection}}
+Content-Type: application/json
+
+###
+DELETE http://localhost:3000/delete-collection/{{database}}/{{collection}}
+Content-Type: application/json 
