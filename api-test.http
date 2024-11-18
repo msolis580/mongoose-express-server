@@ -1,5 +1,5 @@
 @database = BigBoxStore;
-@collection = groceryInventory;
+@collection = GroceryInventory;
 
 @domain = http://localhost;
 
@@ -8,6 +8,16 @@
 ###
 GET {{domain}}:{{port}}/find/{{database}}/{{collection}}
 Content-Type: application/json
+
+###
+POST {{domain}}:{{port}}/insert/{{database}}/{{collection}}
+Content-Type: application/json
+
+{
+  "item": "steak",
+  "food_group": "proteins"
+}
+
 
 ###
 DELETE http://localhost:3000/delete-collection/{{database}}/{{collection}}
