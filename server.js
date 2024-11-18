@@ -46,19 +46,29 @@ const getModel = async (dbName, collectionName) => {
     if (!models[modelKey]) {
         const connection = await getConnection(dbName);
         const Model = modelMapping[collectionName];
-        
-        if(!Model)
-        // Create a dynamic schema that accepts any fields
-        const dynamicSchema = new mongoose.Schema({}, { strict: false });
-        models[modelKey] = connection.model(
-            collectionName,
-            dynamicSchema,
-            collectionName // Use exact collection name from request
-        );
-        console.log("Created new model for collection:", collectionName);
+
+        if (!Model) {
+            // Use a dynamic schema if no model is found
+            const dynamicSchema = new mongoose.Schema({}, { strict: false, autoIndex: false });
+            models[modelKey] = connection.model(
+                collectionName,
+                dynamicSchema,
+                collectionName
+            );
+            console.log(`Created dynamic model for collection: ${collectionName}`);
+        } else {
+            models[modelKey] = connection.model(
+                Model.modelName,
+                Model.schema,
+                collectionName  // Use exact collection name from request
+            );
+            console.log("Created new model for collection:", collectionName);
+        }
     }
+
     return models[modelKey];
 };
+
 
 
 app.get("/find/:database/:collection", async (req, res) => {
